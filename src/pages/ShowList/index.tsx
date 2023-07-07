@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { useNavigate } from 'react-router';
-import { Carrousel } from '../../components/atoms/Carrousel';
-import { MovieCarrouselItem } from '../../components/atoms/MovieCarrouselItem';
+import { HashLoader } from 'react-spinners';
+import lists from '../../assets/data/lists.json';
 import { VideoListing } from '../../components/molecules/VideoListing';
 import { VideoListingCard } from '../../components/molecules/VideoListing/components/Card';
 import BaseLayout from '../../components/organisms/BaseLayout';
@@ -9,57 +10,58 @@ import { MoviesAPI } from '../../services/api/MoviesAPI';
 import { ImageService } from '../../services/image/ImageService';
 import { Movie } from '../../services/movie/IMovieService';
 import { MovieService } from '../../services/movie/MovieService';
-import lists from '../../assets/data/lists.json';
-import { set } from 'react-hook-form';
 import { generateRandomArray } from '../../services/utils/generateRandomArray';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { HashLoader } from 'react-spinners';
+import { TVService } from '../../services/tv/TVService';
+import { TVShow } from '../../services/tv/ITVService';
 
-export const Home = () => {
+export const ShowListPage = () => {
   const api = new MoviesAPI();
-  const movieService = new MovieService(api);
+  const showService = new TVService(api);
   const imageService = new ImageService();
-  const [current, setCurrent] = useState<number>(0);
   const [listMovies, setListMovies] = useState<
     {
       category: string;
       genres: number[];
-      movies: Movie[];
+      shows: TVShow[];
     }[]
   >([]);
-  const [carrouselMovies, setCarrouselMovies] = useState<Movie[]>([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchData();
-
-    movieService.popular().then((movies) => {
-      setCarrouselMovies(movies.results);
-    });
   }, []);
 
   const fetchData = () => {
     console.log('fetching data');
 
-    const randomArray = generateRandomArray(5, 0, lists.categories.length - 1);
+    const randomArray = generateRandomArray(10, 0, lists.categories.length - 1);
     const randomDefs = randomArray.map((index) => lists.categories[index]);
 
     const promises = randomDefs.map(async (list) => {
       const genres = list.genres.map((genre) => genre.id);
 
-      return movieService
+      return showService
         .discover({
           genres,
         })
         .then(({ results }) => {
           console.log(results);
-          return { category: list.category, movies: results, genres };
+          return { category: list.category, shows: results, genres };
         });
     });
 
     Promise.all(promises).then((results) => {
-      setTimeout(() => setListMovies((prev) => [...prev, ...results]), 2000);
+      setTimeout(
+        () =>
+          setListMovies((prev) => [
+            ...prev,
+            ...results.filter((result) => {
+              return result.shows.length > 8;
+            }),
+          ]),
+        2000
+      );
     });
   };
 
@@ -76,29 +78,16 @@ export const Home = () => {
           </div>
         }
         className="absolute top-0 left-0 right-0 bottom-0 overflow-y-scroll scrollbar-hide">
-        <Carrousel current={current} onCurrentChange={(newCurrent) => setCurrent(newCurrent)}>
-          {carrouselMovies.slice(0, 5).map((movie) => (
-            <MovieCarrouselItem
-              title={movie.title}
-              overview={movie.overview}
-              backdropSrc={imageService.getImageSrc(movie.backdrop_path, {
-                size: 'original',
-              })}
-              id={movie.id}
-            />
-          ))}
-        </Carrousel>
-
-        <div className="mt-12 flex flex-col gap-2">
+        <div className="mt-20 flex flex-col gap-2">
           {listMovies.map((list, id) => (
             <VideoListing key={id} title={list.category} className="my-2">
-              {list.movies.map((movie) => (
-                <VideoListingCard key={movie.id} onClick={() => navigate(`/movies/${movie.id}`)}>
+              {list.shows.map((show) => (
+                <VideoListingCard key={show.id} onClick={() => navigate(`/shows/${show.id}/season/1`)}>
                   <img
-                    src={imageService.getImageSrc(movie.poster_path, {
+                    src={imageService.getImageSrc(show.poster_path, {
                       size: 'original',
                     })}
-                    alt={movie.title}
+                    alt={show.name}
                     className="w-full h-full object-cover"
                   />
                 </VideoListingCard>

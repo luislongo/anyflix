@@ -1,5 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { useNavigate } from 'react-router';
+import { HashLoader } from 'react-spinners';
+import lists from '../../assets/data/lists.json';
 import { Carrousel } from '../../components/atoms/Carrousel';
 import { MovieCarrouselItem } from '../../components/atoms/MovieCarrouselItem';
 import { VideoListing } from '../../components/molecules/VideoListing';
@@ -9,17 +12,12 @@ import { MoviesAPI } from '../../services/api/MoviesAPI';
 import { ImageService } from '../../services/image/ImageService';
 import { Movie } from '../../services/movie/IMovieService';
 import { MovieService } from '../../services/movie/MovieService';
-import lists from '../../assets/data/lists.json';
-import { set } from 'react-hook-form';
 import { generateRandomArray } from '../../services/utils/generateRandomArray';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { HashLoader } from 'react-spinners';
 
-export const Home = () => {
+export const MovieListPage = () => {
   const api = new MoviesAPI();
   const movieService = new MovieService(api);
   const imageService = new ImageService();
-  const [current, setCurrent] = useState<number>(0);
   const [listMovies, setListMovies] = useState<
     {
       category: string;
@@ -27,16 +25,11 @@ export const Home = () => {
       movies: Movie[];
     }[]
   >([]);
-  const [carrouselMovies, setCarrouselMovies] = useState<Movie[]>([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchData();
-
-    movieService.popular().then((movies) => {
-      setCarrouselMovies(movies.results);
-    });
   }, []);
 
   const fetchData = () => {
@@ -76,20 +69,7 @@ export const Home = () => {
           </div>
         }
         className="absolute top-0 left-0 right-0 bottom-0 overflow-y-scroll scrollbar-hide">
-        <Carrousel current={current} onCurrentChange={(newCurrent) => setCurrent(newCurrent)}>
-          {carrouselMovies.slice(0, 5).map((movie) => (
-            <MovieCarrouselItem
-              title={movie.title}
-              overview={movie.overview}
-              backdropSrc={imageService.getImageSrc(movie.backdrop_path, {
-                size: 'original',
-              })}
-              id={movie.id}
-            />
-          ))}
-        </Carrousel>
-
-        <div className="mt-12 flex flex-col gap-2">
+        <div className="mt-20 flex flex-col gap-2">
           {listMovies.map((list, id) => (
             <VideoListing key={id} title={list.category} className="my-2">
               {list.movies.map((movie) => (

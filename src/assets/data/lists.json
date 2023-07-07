@@ -1,0 +1,860 @@
+{ 
+    "categories": [{
+        "category": "Mystical Adventures",
+        "genres": [
+            {
+                "id": 12,
+                "name": "Adventure"
+            },
+            {
+                "id": 14,
+                "name": "Fantasy"
+            },
+            {
+                "id": 878,
+                "name": "Science Fiction"
+            }
+        ]
+        },
+        {
+        "category": "Historical Drama",
+        "genres": [
+            {
+                "id": 18,
+                "name": "Drama"
+            },
+            {
+                "id": 36,
+                "name": "History"
+            }
+        ]
+        },
+        {
+        "category": "Comedic Crime Capers",
+        "genres": [
+            {
+                "id": 35,
+                "name": "Comedy"
+            },
+            {
+                "id": 80,
+                "name": "Crime"
+            }
+        ]
+        },
+        {
+        "category": "Sci-Fi Thrillers",
+        "genres": [
+            {
+                "id": 53,
+                "name": "Thriller"
+            },
+            {
+                "id": 878,
+                "name": "Science Fiction"
+            }
+        ]
+        },
+        {
+        "category": "Animated Family Fun",
+        "genres": [
+            {
+                "id": 16,
+                "name": "Animation"
+            },
+            {
+                "id": 10751,
+                "name": "Family"
+            }
+        ]
+        },
+        {
+        "category": "Romantic Period Pieces",
+        "genres": [
+            {
+                "id": 18,
+                "name": "Drama"
+            },
+            {
+                "id": 10749,
+                "name": "Romance"
+            }
+        ]
+        },
+          {
+        "category": "Action-Packed Sci-Fi",
+        "genres": [
+            {
+                "id": 28,
+                "name": "Action"
+            },
+            {
+                "id": 878,
+                "name": "Science Fiction"
+            }
+        ]
+    },
+    {
+        "category": "Historical Mysteries",
+        "genres": [
+            {
+                "id": 9648,
+                "name": "Mystery"
+            },
+            {
+                "id": 36,
+                "name": "History"
+            }
+        ]
+    },
+    {
+        "category": "Comedic Animations",
+        "genres": [
+            {
+                "id": 16,
+                "name": "Animation"
+            },
+            {
+                "id": 35,
+                "name": "Comedy"
+            }
+        ]
+    },
+    {
+        "category": "Romantic Comedies",
+        "genres": [
+            {
+                "id": 35,
+                "name": "Comedy"
+            },
+            {
+                "id": 10749,
+                "name": "Romance"
+            }
+        ]
+    },
+    {
+        "category": "Horror Thrillers",
+        "genres": [
+            {
+                "id": 27,
+                "name": "Horror"
+            },
+            {
+                "id": 53,
+                "name": "Thriller"
+            }
+        ]
+    },
+    {
+        "category": "Family Adventures",
+        "genres": [
+            {
+                "id": 12,
+                "name": "Adventure"
+            },
+            {
+                "id": 10751,
+                "name": "Family"
+            }
+        ]
+    },
+       {
+        "category": "Epic Fantasy",
+        "genres": [
+            {
+                "id": 14,
+                "name": "Fantasy"
+            },
+            {
+                "id": 12,
+                "name": "Adventure"
+            },
+            {
+                "id": 18,
+                "name": "Drama"
+            }
+        ]
+    },
+    {
+        "category": "Crime Documentaries",
+        "genres": [
+            {
+                "id": 80,
+                "name": "Crime"
+            },
+            {
+                "id": 99,
+                "name": "Documentary"
+            }
+        ]
+    },
+    {
+        "category": "Sci-Fi Comedy",
+        "genres": [
+            {
+                "id": 35,
+                "name": "Comedy"
+            },
+            {
+                "id": 878,
+                "name": "Science Fiction"
+            }
+        ]
+    },
+    {
+        "category": "Historical Romance",
+        "genres": [
+            {
+                "id": 18,
+                "name": "Drama"
+            },
+            {
+                "id": 10749,
+                "name": "Romance"
+            },
+            {
+                "id": 36,
+                "name": "History"
+            }
+        ]
+    },
+    {
+        "category": "Action Thrillers",
+        "genres": [
+            {
+                "id": 28,
+                "name": "Action"
+            },
+            {
+                "id": 53,
+                "name": "Thriller"
+            }
+        ]
+    },
+    {
+        "category": "Animated Musical",
+        "genres": [
+            {
+                "id": 16,
+                "name": "Animation"
+            },
+            {
+                "id": 10402,
+                "name": "Music"
+            }
+        ]
+    },
+    {
+        "category": "Supernatural Crime Thrillers",
+        "genres": [
+            {
+                "id": 80,
+                "name": "Crime"
+            },
+            {
+                "id": 53,
+                "name": "Thriller"
+            },
+            {
+                "id": 14,
+                "name": "Fantasy"
+            }
+        ]
+    },
+    {
+        "category": "Sci-Fi Action Adventures",
+        "genres": [
+            {
+                "id": 28,
+                "name": "Action"
+            },
+            {
+                "id": 12,
+                "name": "Adventure"
+            },
+            {
+                "id": 878,
+                "name": "Science Fiction"
+            }
+        ]
+    },
+    {
+        "category": "Historical War Dramas",
+        "genres": [
+            {
+                "id": 18,
+                "name": "Drama"
+            },
+            {
+                "id": 36,
+                "name": "History"
+            },
+            {
+                "id": 10752,
+                "name": "War"
+            }
+        ]
+    },
+    {
+        "category": "Animated Family Fantasy",
+        "genres": [
+            {
+                "id": 16,
+                "name": "Animation"
+            },
+            {
+                "id": 10751,
+                "name": "Family"
+            },
+            {
+                "id": 14,
+                "name": "Fantasy"
+            }
+        ]
+    },
+    {
+        "category": "Romantic Comedy Mysteries",
+        "genres": [
+            {
+                "id": 35,
+                "name": "Comedy"
+            },
+            {
+                "id": 9648,
+                "name": "Mystery"
+            },
+            {
+                "id": 10749,
+                "name": "Romance"
+            }
+        ]
+    },
+    {
+        "category": "Horror Sci-Fi Thrillers",
+        "genres": [
+            {
+                "id": 27,
+                "name": "Horror"
+            },
+            {
+                "id": 53,
+                "name": "Thriller"
+            },
+            {
+                "id": 878,
+                "name": "Science Fiction"
+            }
+        ]
+    },
+        {
+        "category": "Explosive Rom-Action",
+        "genres": [
+            {
+                "id": 28,
+                "name": "Action"
+            },
+            {
+                "id": 35,
+                "name": "Comedy"
+            },
+            {
+                "id": 10749,
+                "name": "Romance"
+            }
+        ]
+    },
+    {
+        "category": "Mystery Mischief",
+        "genres": [
+            {
+                "id": 9648,
+                "name": "Mystery"
+            },
+            {
+                "id": 35,
+                "name": "Comedy"
+            },
+            {
+                "id": 10751,
+                "name": "Family"
+            }
+        ]
+    },
+    {
+        "category": "Sci-Fi Silliness",
+        "genres": [
+            {
+                "id": 878,
+                "name": "Science Fiction"
+            },
+            {
+                "id": 35,
+                "name": "Comedy"
+            },
+            {
+                "id": 14,
+                "name": "Fantasy"
+            }
+        ]
+    },
+    {
+        "category": "Historical Hilarity",
+        "genres": [
+            {
+                "id": 18,
+                "name": "Drama"
+            },
+            {
+                "id": 36,
+                "name": "History"
+            },
+            {
+                "id": 35,
+                "name": "Comedy"
+            }
+        ]
+    },
+    {
+        "category": "Thrills & Chuckles",
+        "genres": [
+            {
+                "id": 53,
+                "name": "Thriller"
+            },
+            {
+                "id": 35,
+                "name": "Comedy"
+            },
+            {
+                "id": 10751,
+                "name": "Family"
+            }
+        ]
+    },
+    {
+        "category": "Animated Amusement",
+        "genres": [
+            {
+                "id": 16,
+                "name": "Animation"
+            },
+            {
+                "id": 10751,
+                "name": "Family"
+            },
+            {
+                "id": 35,
+                "name": "Comedy"
+            }
+        ]
+    },
+    {
+        "category": "Action-Packed Hilarity",
+        "genres": [
+            {
+                "id": 28,
+                "name": "Action"
+            },
+            {
+                "id": 35,
+                "name": "Comedy"
+            },
+            {
+                "id": 18,
+                "name": "Drama"
+            }
+        ]
+    },
+    {
+        "category": "Mystical Laughs",
+        "genres": [
+            {
+                "id": 14,
+                "name": "Fantasy"
+            },
+            {
+                "id": 35,
+                "name": "Comedy"
+            },
+            {
+                "id": 9648,
+                "name": "Mystery"
+            }
+        ]
+    },
+    {
+        "category": "Sci-Fi Gigglefest",
+        "genres": [
+            {
+                "id": 878,
+                "name": "Science Fiction"
+            },
+            {
+                "id": 35,
+                "name": "Comedy"
+            },
+            {
+                "id": 16,
+                "name": "Animation"
+            }
+        ]
+    },
+    {
+        "category": "Historical Hysterics",
+        "genres": [
+            {
+                "id": 18,
+                "name": "Drama"
+            },
+            {
+                "id": 35,
+                "name": "Comedy"
+            },
+            {
+                "id": 36,
+                "name": "History"
+            }
+        ]
+    },
+    {
+        "category": "Thrill-Roasted Chuckles",
+        "genres": [
+            {
+                "id": 53,
+                "name": "Thriller"
+            },
+            {
+                "id": 35,
+                "name": "Comedy"
+            },
+            {
+                "id": 10751,
+                "name": "Family"
+            }
+        ]
+    },
+    {
+        "category": "Animated Comedy Parade",
+        "genres": [
+            {
+                "id": 16,
+                "name": "Animation"
+            },
+            {
+                "id": 35,
+                "name": "Comedy"
+            },
+            {
+                "id": 10751,
+                "name": "Family"
+            }
+        ]
+    },
+        {
+        "category": "Intense Drama Fiesta",
+        "genres": [
+            {
+                "id": 18,
+                "name": "Drama"
+            },
+            {
+                "id": 35,
+                "name": "Comedy"
+            },
+            {
+                "id": 53,
+                "name": "Thriller"
+            }
+        ]
+    },
+    {
+        "category": "Emotionally Charged Epics",
+        "genres": [
+            {
+                "id": 18,
+                "name": "Drama"
+            },
+            {
+                "id": 36,
+                "name": "History"
+            },
+            {
+                "id": 10752,
+                "name": "War"
+            }
+        ]
+    },
+    {
+        "category": "Mysterious Mind-Benders",
+        "genres": [
+            {
+                "id": 18,
+                "name": "Drama"
+            },
+            {
+                "id": 9648,
+                "name": "Mystery"
+            },
+            {
+                "id": 53,
+                "name": "Thriller"
+            }
+        ]
+    },
+    {
+        "category": "Thought-Provoking Tales",
+        "genres": [
+            {
+                "id": 18,
+                "name": "Drama"
+            },
+            {
+                "id": 99,
+                "name": "Documentary"
+            },
+            {
+                "id": 9648,
+                "name": "Mystery"
+            }
+        ]
+    },
+    {
+        "category": "Powerful Historical Narratives",
+        "genres": [
+            {
+                "id": 18,
+                "name": "Drama"
+            },
+            {
+                "id": 36,
+                "name": "History"
+            },
+            {
+                "id": 80,
+                "name": "Crime"
+            }
+        ]
+    },
+    {
+        "category": "Gripping Thrillers Unleashed",
+        "genres": [
+            {
+                "id": 53,
+                "name": "Thriller"
+            },
+            {
+                "id": 80,
+                "name": "Crime"
+            },
+            {
+                "id": 27,
+                "name": "Horror"
+            }
+        ]
+    },
+        {
+        "category": "Cinematic Emotional Rollercoasters",
+        "genres": [
+            {
+                "id": 18,
+                "name": "Drama"
+            },
+            {
+                "id": 35,
+                "name": "Comedy"
+            },
+            {
+                "id": 10749,
+                "name": "Romance"
+            }
+        ]
+    },
+    {
+        "category": "Mind-Bending Noir",
+        "genres": [
+            {
+                "id": 80,
+                "name": "Crime"
+            },
+            {
+                "id": 9648,
+                "name": "Mystery"
+            },
+            {
+                "id": 53,
+                "name": "Thriller"
+            }
+        ]
+    },
+    {
+        "category": "Introspective Historical Journeys",
+        "genres": [
+            {
+                "id": 18,
+                "name": "Drama"
+            },
+            {
+                "id": 36,
+                "name": "History"
+            },
+            {
+                "id": 10752,
+                "name": "War"
+            }
+        ]
+    },
+    {
+        "category": "Thoughtful Science Speculations",
+        "genres": [
+            {
+                "id": 18,
+                "name": "Drama"
+            },
+            {
+                "id": 878,
+                "name": "Science Fiction"
+            },
+            {
+                "id": 9648,
+                "name": "Mystery"
+            }
+        ]
+    },
+    {
+        "category": "Powerful Biographical Journeys",
+        "genres": [
+            {
+                "id": 18,
+                "name": "Drama"
+            },
+            {
+                "id": 99,
+                "name": "Documentary"
+            },
+            {
+                "id": 35,
+                "name": "Comedy"
+            }
+        ]
+    },
+    {
+        "category": "Suspenseful Political Intrigues",
+        "genres": [
+            {
+                "id": 18,
+                "name": "Drama"
+            },
+            {
+                "id": 9648,
+                "name": "Mystery"
+            },
+            {
+                "id": 10752,
+                "name": "War"
+            }
+        ]
+    },
+     {
+        "category": "Darkly Humorous Thrillers",
+        "genres": [
+            {
+                "id": 53,
+                "name": "Thriller"
+            },
+            {
+                "id": 35,
+                "name": "Comedy"
+            },
+            {
+                "id": 80,
+                "name": "Crime"
+            }
+        ]
+    },
+    {
+        "category": "Philosophical Mindbenders",
+        "genres": [
+            {
+                "id": 18,
+                "name": "Drama"
+            },
+            {
+                "id": 9648,
+                "name": "Mystery"
+            },
+            {
+                "id": 878,
+                "name": "Science Fiction"
+            }
+        ]
+    },
+    {
+        "category": "Quirky Tales of Existence",
+        "genres": [
+            {
+                "id": 35,
+                "name": "Comedy"
+            },
+            {
+                "id": 18,
+                "name": "Drama"
+            },
+            {
+                "id": 16,
+                "name": "Animation"
+            }
+        ]
+    },
+    {
+        "category": "Enigmatic Psychological Dramas",
+        "genres": [
+            {
+                "id": 18,
+                "name": "Drama"
+            },
+            {
+                "id": 9648,
+                "name": "Mystery"
+            },
+            {
+                "id": 27,
+                "name": "Horror"
+            }
+        ]
+    },
+    {
+        "category": "Intense Character Studies",
+        "genres": [
+            {
+                "id": 18,
+                "name": "Drama"
+            },
+            {
+                "id": 80,
+                "name": "Crime"
+            },
+            {
+                "id": 36,
+                "name": "History"
+            }
+        ]
+    },
+    {
+        "category": "Cerebral Sci-Fi Adventures",
+        "genres": [
+            {
+                "id": 878,
+                "name": "Science Fiction"
+            },
+            {
+                "id": 12,
+                "name": "Adventure"
+            },
+            {
+                "id": 9648,
+                "name": "Mystery"
+            }
+        ]
+    }
+]}

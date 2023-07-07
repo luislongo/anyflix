@@ -1,46 +1,42 @@
-import React, { useEffect } from "react";
-import { ArrowController } from "./components/ArrowController";
-import { Listing } from "./components/Listing";
-import { useHorizontalScroll } from "../../../hooks/useHorizontalScroll";
+import React, { useRef } from 'react';
+import { ChevronRightIcon } from '../../../assets/icons/chevronRight';
 
 export type TVideoListingProps = {
   title: string;
   children: React.ReactNode;
-};
+} & React.HTMLAttributes<HTMLDivElement>;
 
-export const VideoListing: React.FC<TVideoListingProps> = ({
-  children,
-  title,
-}) => {
-  const { ref, scroll, scrollTo, width } = useHorizontalScroll();
-
-  useEffect(() => {
-    scrollTo(0.33333 * width);
-  }, [width]);
-
-  useEffect(() => {
-    if (scroll === 0) {
-      scrollTo(0.33333 * width);
-    }
-    if (scroll > 0.66666 * width) {
-      scrollTo(0.33333 * width);
-    }
-  }, [scroll]);
+export const VideoListing: React.FC<TVideoListingProps> = ({ children, title, className, ...props }) => {
+  const ref = useRef<HTMLUListElement>(null);
 
   return (
-    <div className="overflow-x-hidden w-full ">
-      <p className="z-10 pb-2 pl-16 text-white text-bold ">{title}</p>
-      <div className="grid grid-cols-[4rem_1fr_4rem] ">
-        <ArrowController side="left" />
-        <ul
-          ref={ref}
-          className="relative flex flex-row flex-nowrap gap-2 overflow-x-scroll scrollbar-hide"
-        >
-          {children}
-          {children}
+    <div className={`relative overflow-x-auto w-screen ${className}`} {...props}>
+      <p className="z-10 pb-4 text-white text-bold text-lg font-normal ml-8 ">{title}</p>
+      <div className="relative h-fit">
+        <div
+          className="absolute top-0 bottom-0 left-0 p-2 text-white z-20 group hover:bg-black hover:bg-opacity-20 transition-all flex items-center"
+          onClick={() => {
+            if (ref.current) {
+              ref.current.scroll({ left: ref.current.scrollLeft - window.innerWidth, behavior: 'smooth' });
+            }
+          }}>
+          <ChevronRightIcon
+            className="w-10 h-10 rotate-180 group-hover:scale-125 transition-all"
+            style="fill-white  "
+          />
+        </div>
+        <ul className="relative flex flex-row flex-nowrap gap-4 overflow-x-scroll scrollbar-hide px-6" ref={ref}>
           {children}
         </ul>
-        <ArrowController side="right" />
+        <div
+          className="absolute top-0 bottom-0 right-0 p-2 text-white z-20 group hover:bg-black hover:bg-opacity-20 transition-all flex items-center"
+          onClick={() => {
+            if (ref.current) {
+              ref.current.scroll({ left: ref.current.scrollLeft + window.innerWidth, behavior: 'smooth' });
+            }
+          }}>
+          <ChevronRightIcon className="w-10 h-10  group-hover:scale-125 transition-all" style="fill-white  " />
+        </div>
       </div>
     </div>
   );

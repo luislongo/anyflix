@@ -1,5 +1,5 @@
-import React, { useMemo, ReactNode, useEffect } from "react";
-import { useHorizontalScroll } from "../../../../../hooks/useHorizontalScroll";
+import React, { useMemo, ReactNode, useEffect } from 'react';
+import { useHorizontalScroll } from '../../../../../hooks/useHorizontalScroll';
 
 export type TListingProps = {
   children: ReactNode | Array<ReactNode>;
@@ -22,12 +22,7 @@ export const Listing: React.FC<TListingProps> = ({ children }) => {
   }, [scroll]);
 
   return (
-    <ul
-      ref={ref}
-      className="flex flex-row flex-nowrap gap-2 overflow-x-scroll scrollbar-hide"
-    >
-      {children}
-      {children}
+    <ul ref={ref} className="flex flex-row flex-nowrap gap-2 overflow-x-scroll scrollbar-hide">
       {children}
     </ul>
   );
