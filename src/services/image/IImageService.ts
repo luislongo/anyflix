@@ -1,5 +1,5 @@
 export interface ImageOpts {
-    size?: 'w500' | 'original';
+    size?: 'w500' | 'w1280' | 'original';
 }
 
 export interface IImageService {

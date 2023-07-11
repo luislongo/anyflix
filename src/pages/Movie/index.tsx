@@ -15,6 +15,7 @@ import { MovieService } from '../../services/movie/MovieService';
 import { joinReactNodes } from '../../services/utils/joinReactElements';
 import { runtimeFormatter } from '../../utils/runtimeFormatter';
 import { Overlay } from '../../components/atoms/Overlay';
+import { PlayCircleIcon } from '../../assets/icons/playCircle';
 
 export type HeaderProps = HTMLAttributes<HTMLDivElement> & {
   details?: MovieDetails;
@@ -108,13 +109,15 @@ export const PosterList = ({
 
 export const CastListItem = ({ person }: { person: Cast }) => {
   return (
-    <div className="flex flex-col items-center shrink-0 gap-2">
+    <div className="flex flex-col items-center shrink-0 max-w-[150px]">
       <img
         src={new ImageService().getImageSrc(person.profile_path || '')}
-        className="h-24 w-24 object-cover rounded-full"
+        className="h-24 w-24 object-cover rounded-full mb-2"
       />
-      <span className="text-white text-sm w-22 whitespace-none ">{person.name}</span>
-      <h3 className="text-white text-sm whitespace-none">{person.character}</h3>
+      <h4 className="text-white font-bold whitespace-nowrap text-center overflow-hidden w-full text-ellipsis">
+        {person.name}
+      </h4>
+      <h5 className="text-white text-sm whitespace-nowrap overflow-hidden w-full text-ellipsis">{person.character}</h5>
     </div>
   );
 };
@@ -164,7 +167,7 @@ export const MoviePage = () => {
             size: 'w500',
           }),
           largeUrl: imageService.getImageSrc(image.file_path, {
-            size: 'original',
+            size: 'w1280',
           }),
         }))
       );
@@ -173,7 +176,11 @@ export const MoviePage = () => {
 
   return (
     <BaseLayout>
-      <Background src={imageService.getImageSrc(details?.backdrop_path || '')} />
+      <Background
+        src={imageService.getImageSrc(details?.backdrop_path || '', {
+          size: 'w1280',
+        })}
+      />
       <MainContainer>
         <div className="px-8 flex flex-col gap-5 justify-between pb-8">
           <div>
@@ -186,23 +193,31 @@ export const MoviePage = () => {
               />
               <h3 className="text-white font-light">{runtimeFormatter(details?.runtime || 0)}</h3>
               <h3 className="flex flex-row text-white font-light">
-                {details?.genres?.map((genre) => genre.name).join(', ')}
+                {details?.genres
+                  ?.slice(0, 3)
+                  .map((genre) => genre.name)
+                  .join(', ')}
               </h3>
               <h3 className="text-lg text-white font-light">{new Date(details?.release_date || 0).getFullYear()}</h3>
             </Subtitle>
             <p className="text-md py-4 text-white">{details?.overview}</p>
           </div>
 
-          <div className="flex flex-row gap-4">
-            <Button onClick={() => navigate(`/watch/${id}`)}>Watch</Button>
-            <Button onClick={() => navigate(`/watch/${id}`)}>Trailer</Button>
+          <div className="flex flex-row gap-4 self-end">
+            <Button onClick={() => navigate(`/watch/${id}`)} className="flex flex-row items-center group pr-12  gap-2">
+              <PlayCircleIcon className="w-6 h-6" style="fill-white" />
+              <p>PLAY NOW</p>
+            </Button>
+            <Button onClick={() => navigate(`/watch/${id}`)} className="flex flex-row px-6">
+              TRAILER
+            </Button>
           </div>
         </div>
         <div className="flex flex-col gap-4">
           <PosterList images={images || []} />
 
           <CastList>
-            {credits?.cast?.map((person) => (
+            {credits?.cast?.slice(0, 15).map((person) => (
               <CastListItem person={person} />
             ))}
           </CastList>
