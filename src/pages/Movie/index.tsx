@@ -1,16 +1,132 @@
-import { useEffect, useState } from 'react';
+import { HTMLAttributes, ImgHTMLAttributes, ReactNode, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useNavigate, useParams } from 'react-router';
-import { Rating } from '../../components/atoms/Rating';
-import { VideoListing } from '../../components/molecules/VideoListing';
-import { VideoListingCard } from '../../components/molecules/VideoListing/components/Card';
+import { ArrowController } from '../../components/atoms/ArrowController';
+import { Button } from '../../components/atoms/Button';
+import { HorizontalScroll } from '../../components/atoms/HorizontalScroll';
+import { ShortRating } from '../../components/atoms/ShortRating';
 import BaseLayout from '../../components/organisms/BaseLayout';
 import { MoviesAPI } from '../../services/api/MoviesAPI';
+import { CreditsService } from '../../services/credits/CreditsService';
+import { Cast, Credits } from '../../services/credits/ICreditsService';
 import { ImageService } from '../../services/image/ImageService';
 import { Movie, MovieDetails } from '../../services/movie/IMovieService';
 import { MovieService } from '../../services/movie/MovieService';
-import { Credits } from '../../services/credits/ICreditsService';
-import { CreditsService } from '../../services/credits/CreditsService';
-import { ExpandableImage } from '../../components/atoms/ExpandableImage';
+import { joinReactNodes } from '../../services/utils/joinReactElements';
+import { runtimeFormatter } from '../../utils/runtimeFormatter';
+import { Overlay } from '../../components/atoms/Overlay';
+
+export type HeaderProps = HTMLAttributes<HTMLDivElement> & {
+  details?: MovieDetails;
+};
+
+export const Subtitle: React.FC<HeaderProps> = ({ details, children, ...rest }) => {
+  const interleavedChildren = joinReactNodes(children, <p className="text-white">●</p>);
+
+  return <div className="flex flex-row w-full items-center gap-4">{interleavedChildren}</div>;
+};
+
+export const MainContainer: React.FC<HTMLAttributes<HTMLDivElement>> = (props) => {
+  return <div className="absolute bottom-0 left-0 w-screen h-[65%] grid grid-cols-2" {...props} />;
+};
+
+export const Background: React.FC<ImgHTMLAttributes<HTMLImageElement>> = ({ src, ...rest }) => {
+  return (
+    <>
+      <div className="absolute bg-gradient-to-b from-transparent to-black top-0 left-0 w-screen h-screen -z-10" />
+      <img
+        src={src}
+        className="absolute left-0 right-0 top-0 bottom-0 h-full w-full object-cover -z-20  transform scale-[1.2] "
+      />
+    </>
+  );
+};
+
+export type TitleProps = HTMLAttributes<HTMLDivElement> & {
+  details?: MovieDetails;
+};
+
+export const Title: React.FC<TitleProps> = ({ details }) => {
+  return <h1 className="text-6xl mb-2 text-white line-clamp-1">{details?.original_title}</h1>;
+};
+
+export const PosterList = ({
+  images,
+}: {
+  images: {
+    smallUrl: string;
+    largeUrl: string;
+  }[];
+}) => {
+  const [selected, setSelected] = useState<number>();
+
+  const handleArrowClick = (side: 'left' | 'right') => {
+    let newSelected = selected || 0;
+    if (side === 'left') {
+      newSelected = newSelected - 1;
+      if (newSelected < 0) newSelected = images.length - 1;
+    } else {
+      newSelected = newSelected + 1;
+      if (newSelected > images.length - 1) newSelected = 0;
+    }
+
+    setSelected(newSelected);
+  };
+
+  return (
+    <div className="select-none">
+      <h2 className="text-white text-2xl mb-2">Posters</h2>
+      <HorizontalScroll title="Posters" className="flex flex-row flex-nowrap gap-2 h-40 overflow-x-auto">
+        {images?.map((image, id) => {
+          return (
+            <img
+              src={image.smallUrl}
+              className="h-auto hover:scale-100 scale-95 cursor-pointer "
+              onClick={() => setSelected(id)}
+            />
+          );
+        })}
+      </HorizontalScroll>
+      {selected !== undefined &&
+        createPortal(
+          <div className="fixed top-0 left-0 w-screen h-screen  flex justify-center items-center">
+            <Overlay onClick={() => setSelected(undefined)} />
+            <ArrowController side="left" onClick={() => handleArrowClick('left')} />
+            <ArrowController side="right" onClick={() => handleArrowClick('right')} />
+            <div className=" absolute flex flex-col items-center gap-4 h-[80%] max-h-[80%]">
+              <img src={images[selected].largeUrl} className="h-full select-none" />
+              <p className="text-white font-sans font-bold text-lg">
+                {selected} / {images.length}
+              </p>
+            </div>
+          </div>,
+          document.body
+        )}
+    </div>
+  );
+};
+
+export const CastListItem = ({ person }: { person: Cast }) => {
+  return (
+    <div className="flex flex-col items-center shrink-0 gap-2">
+      <img
+        src={new ImageService().getImageSrc(person.profile_path || '')}
+        className="h-24 w-24 object-cover rounded-full"
+      />
+      <span className="text-white text-sm w-22 whitespace-none ">{person.name}</span>
+      <h3 className="text-white text-sm whitespace-none">{person.character}</h3>
+    </div>
+  );
+};
+
+export const CastList = ({ children }: { children?: ReactNode }) => {
+  return (
+    <div>
+      <h2 className="text-white text-2xl mb-2">Cast</h2>
+      <HorizontalScroll className="flex flex-row  gap-4 overflow-x-hidden">{children}</HorizontalScroll>;
+    </div>
+  );
+};
 
 export const MoviePage = () => {
   const api = new MoviesAPI();
@@ -21,7 +137,12 @@ export const MoviePage = () => {
   const [details, setDetails] = useState<MovieDetails>();
   const [similar, setSimilar] = useState<Movie[]>();
   const [credits, setCredits] = useState<Credits>();
-  const [images, setImages] = useState<string[]>();
+  const [images, setImages] = useState<
+    {
+      smallUrl: string;
+      largeUrl: string;
+    }[]
+  >();
   const { id } = useParams<{ id: string }>();
 
   const navigate = useNavigate();
@@ -37,76 +158,56 @@ export const MoviePage = () => {
       setCredits(res);
     });
     moviesService.images(id || '').then((res) => {
-      setImages(res.backdrops.map((image) => imageService.getImageSrc(image.file_path)));
+      setImages(
+        res.backdrops.map((image) => ({
+          smallUrl: imageService.getImageSrc(image.file_path, {
+            size: 'w500',
+          }),
+          largeUrl: imageService.getImageSrc(image.file_path, {
+            size: 'original',
+          }),
+        }))
+      );
     });
   }, [id]);
 
   return (
     <BaseLayout>
-      <div className="absolute mt-10 top-0 left-0 right-0 bottom-0 overflow-y-scroll overflow-x-hidden scrollbar-hide">
-        <img
-          src={imageService.getImageSrc(details?.backdrop_path || '')}
-          className="fixed left-0 right-0 top-0 bottom-0 h-full w-full object-cover -z-10 blur-2xl transform scale-[1.2]"
-        />
-        <div className="flex flex-row bg-black mx-6 p-6 mt-10 bg-opacity-30 h-[32rem] overflow-hidden items-stretch">
-          <img src={imageService.getImageSrc(details?.poster_path || '')} className="h-full w-auto" />
-          <div className="pl-12 flex flex-col gap-2 w-1/2 mr-8 ">
-            <div className="flex flex-row w-1/2 justify-between items-center">
-              <h3 className="text-lg text-white font-light">
-                {new Date(details?.release_date || '').toLocaleDateString()}
+      <Background src={imageService.getImageSrc(details?.backdrop_path || '')} />
+      <MainContainer>
+        <div className="px-8 flex flex-col gap-5 justify-between pb-8">
+          <div>
+            <Title details={details} />
+            <Subtitle details={details}>
+              <ShortRating
+                className="w-30 h-10"
+                rating={details?.vote_average || 0}
+                voteCount={details?.vote_count || 0}
+              />
+              <h3 className="text-white font-light">{runtimeFormatter(details?.runtime || 0)}</h3>
+              <h3 className="flex flex-row text-white font-light">
+                {details?.genres?.map((genre) => genre.name).join(', ')}
               </h3>
-              <h3 className="text-lg text-white font-light">{details?.runtime}min</h3>
-              <Rating className="w-30 h-10" rating={(details?.vote_average || 0) / 2 || 0} />
-            </div>
-            <div>
-              <h1 className="text-6xl mb-2 text-white">{details?.original_title}</h1>
-              <h2 className="text-2xl mb-2">{details?.tagline}</h2>
-            </div>
-            <div>
-              <h3 className="text-lg mb-2">Sinopse</h3>
-              <p className="text-md mb-2">{details?.overview}</p>
-            </div>
+              <h3 className="text-lg text-white font-light">{new Date(details?.release_date || 0).getFullYear()}</h3>
+            </Subtitle>
+            <p className="text-md py-4 text-white">{details?.overview}</p>
           </div>
-          <div className="flex flex-row flex-wrap gap-2 w-96 overflow-y-scroll scrollbar-hide ">
-            {images?.map((image) => (
-              <ExpandableImage src={image} className="h-auto flex-1 hover:scale-100 scale-95 cursor-pointer" />
-            ))}
+
+          <div className="flex flex-row gap-4">
+            <Button onClick={() => navigate(`/watch/${id}`)}>Watch</Button>
+            <Button onClick={() => navigate(`/watch/${id}`)}>Trailer</Button>
           </div>
         </div>
-        <VideoListing title={'Similar'}>
-          {similar?.map((movie) => (
-            <VideoListingCard
-              key={movie.id}
-              onClick={() => {
-                navigate(`/movies/${movie.id}`);
-              }}>
-              <img src={imageService.getImageSrc(movie.poster_path || '')} className="h-fulçl w-auto" />
-            </VideoListingCard>
-          ))}
-        </VideoListing>
-        <VideoListing title="Cast">
-          {credits?.cast.map((member, id) => (
-            <div key={id} className="flex flex-row min-w-fit gap-2 items-center  ">
-              <img src={imageService.getImageSrc(member.profile_path || '')} className="w-20" />
-              <div>
-                <h3 className="font-bold">{member.name}</h3>
-                <p>{member.character}</p>
-              </div>
-            </div>
-          ))}
-        </VideoListing>
-        <VideoListing title="Crew">
-          {credits?.crew.map((member, id) => (
-            <div key={id} className="flex flex-row min-w-fit gap-2 items-center  ">
-              <img src={imageService.getImageSrc(member.profile_path || '')} className="w-20" />
-              <div>
-                <h3 className="font-bold">{member.name}</h3>
-                <p>{member.job}</p>
-              </div>
-            </div>
-          ))}
-        </VideoListing>
-      </div>
+        <div className="flex flex-col gap-4">
+          <PosterList images={images || []} />
+
+          <CastList>
+            {credits?.cast?.map((person) => (
+              <CastListItem person={person} />
+            ))}
+          </CastList>
+        </div>
+      </MainContainer>
     </BaseLayout>
   );
 };

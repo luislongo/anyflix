@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { Rating } from '../../components/atoms/Rating';
+import { ShortRating } from '../../components/atoms/ShortRating';
 import { VideoListing } from '../../components/molecules/VideoListing';
 import { VideoListingCard } from '../../components/molecules/VideoListing/components/Card';
 import BaseLayout from '../../components/organisms/BaseLayout';
@@ -10,7 +10,7 @@ import { SeasonsService } from '../../services/seasons/SeasonsService';
 import { TVShow, TVShowCredits, TVShowDetails, TVShowSeason } from '../../services/tv/ITVService';
 import { TVService } from '../../services/tv/TVService';
 import { SeasonDetails } from '../../services/seasons/ISeasonsService';
-import { joinReactElement } from '../../services/utils/joinReactElements';
+import { joinReactNodes } from '../../services/utils/joinReactElements';
 
 export interface EpisodeCardProps {
   name: string;
@@ -83,7 +83,7 @@ export const ShowPage = () => {
           <img src={imageService.getImageSrc(details?.poster_path || '')} className="h-96 w-auto" />
           <div className="pl-12 flex flex-col gap-8 ">
             <div>
-              <Rating rating={details?.vote_average || 0} />
+              <ShortRating rating={details?.vote_average || 0} voteCount={details?.vote_count || 0} />
               <h1 className="text-6xl mb-2">{details?.name}</h1>
               <h2 className="text-2xl mb-2">{details?.tagline}</h2>
             </div>
@@ -95,7 +95,7 @@ export const ShowPage = () => {
         </div>
         <div className="mb-10">
           <ul className="flex flex-row gap-2 mb-4 select-none ">
-            {joinReactElement(
+            {joinReactNodes(
               details?.seasons.map((season, id) => (
                 <li
                   key={season.id}
