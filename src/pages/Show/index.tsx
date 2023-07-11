@@ -10,26 +10,10 @@ import { TVService } from '../../services/tv/TVService';
 import { SeasonDetails } from '../../services/seasons/ISeasonsService';
 import { joinReactNodes } from '../../services/utils/joinReactElements';
 import { ShowTitleTemplate } from '../../components/templates/ShowTitleTemplate';
-
-export interface EpisodeCardProps {
-  name: string;
-  number: number;
-  thumbnailSrc: string;
-  onClick?: () => void;
-}
-
-export const EpisodeCard: React.FC<EpisodeCardProps> = ({ name, thumbnailSrc, number, onClick }) => {
-  return (
-    <div
-      className="group flex flex-col gap-2 max-w-md shrink hover:scale-105 cursor-pointer transition-transform overflow-hidden"
-      onClick={() => onClick?.()}>
-      <img src={thumbnailSrc} className="h-auto w-auto" />
-      <h3 className="text-md mb-2 font-medium text-white group-hover:text-primary-300">
-        {number} | {name}
-      </h3>
-    </div>
-  );
-};
+import { SeasonNavbar } from './SeasonNavbar';
+import { EpisodeCard } from './EpisodeCard';
+import { episodeNumberFormatter } from '../../utils/episodeNumberFormatter';
+import { EpisodeList } from './EpisodeList';
 
 export const ShowPage = () => {
   const api = new MoviesAPI();
@@ -85,32 +69,23 @@ export const ShowPage = () => {
       })}
       asideProps={{
         children: (
-          <div className="mb-10">
-            <ul className="flex flex-row gap-2 mb-4 select-none ">
-              {joinReactNodes(
-                details?.seasons.map((season, id) => (
-                  <li
-                    key={season.id}
-                    className={`font-semibold hover:text-primary-400 cursor-pointer hover:scale-105 transition-all ${
-                      season.season_number === Number(seasonNumber) ? 'text-primary-400' : 'text-white'
-                    }`}
-                    onClick={() => navigate(`/shows/${showId}/season/${season.season_number}`)}>
-                    {season.name}
-                  </li>
-                )) || [],
-                <span className="text-white"> | </span>
-              )}
-            </ul>
-            <ul className="grid grid-cols-4 gap-4 select-none">
+          <div className="overflow-hidden w-full">
+            <SeasonNavbar
+              seasons={details?.seasons}
+              onClick={(season) => navigate(`/shows/${showId}/season/${season.season_number}`)}
+              currentSeason={seasonDetails?.season_number}
+            />
+
+            <EpisodeList>
               {seasonDetails?.episodes?.map((episode, id) => (
                 <EpisodeCard
                   name={episode.name}
                   thumbnailSrc={imageService.getImageSrc(episode.still_path || '')}
-                  number={episode.episode_number}
+                  order={episodeNumberFormatter(episode.episode_number, seasonDetails.episodes.length)}
                   onClick={() => navigate(`episode/${episode.episode_number}`)}
                 />
               ))}
-            </ul>
+            </EpisodeList>
           </div>
         ),
       }}
