@@ -5,5 +5,5 @@ export type OverviewProps = {
 };
 
 export const Overview: React.FC<OverviewProps> = ({ overview = '' }) => {
-  return <p className="text-md py-4 text-white">{overview}</p>;
+  return <p className="text-xl font-light py-4 text-white max-w-[600px] tracking-wider">{overview}</p>;
 };

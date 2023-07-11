@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { ShortRating } from '../../components/atoms/ShortRating';
+import { ShortRating } from '../../components/templates/ShowTitleTemplate/ShortRating';
 import BaseLayout from '../../components/organisms/BaseLayout';
 import { MoviesAPI } from '../../services/api/MoviesAPI';
 import { ImageService } from '../../services/image/ImageService';
@@ -9,6 +9,7 @@ import { TVShow, TVShowCredits, TVShowDetails, TVShowSeason } from '../../servic
 import { TVService } from '../../services/tv/TVService';
 import { SeasonDetails } from '../../services/seasons/ISeasonsService';
 import { joinReactNodes } from '../../services/utils/joinReactElements';
+import { ShowTitleTemplate } from '../../components/templates/ShowTitleTemplate';
 
 export interface EpisodeCardProps {
   name: string;
@@ -71,54 +72,48 @@ export const ShowPage = () => {
   };
 
   return (
-    <BaseLayout>
-      <img
-        src={imageService.getImageSrc(details?.backdrop_path || '')}
-        className="fixed left-0 right-0 top-0 bottom-0 h-full w-full object-cover -z-10 blur-2xl transform scale-[1.2]"
-      />
-      <div className="absolute top-0 bottom-0 left-0 right-0 overflow-y-scroll mx-8 mt-16 scrollbar-hide">
-        <div className="flex flex-row items-start mb-8">
-          <img src={imageService.getImageSrc(details?.poster_path || '')} className="h-96 w-auto" />
-          <div className="pl-12 flex flex-col gap-8 ">
-            <div>
-              <ShortRating rating={details?.vote_average || 0} voteCount={details?.vote_count || 0} />
-              <h1 className="text-6xl mb-2">{details?.name}</h1>
-              <h2 className="text-2xl mb-2">{details?.tagline}</h2>
-            </div>
-            <div>
-              <h3 className="text-lg mb-2">Sinopse</h3>
-              <p className="text-md mb-2">{details?.overview}</p>
-            </div>
+    <ShowTitleTemplate
+      title={details?.name}
+      voteAverage={details?.vote_average}
+      genres={details?.genres}
+      overview={details?.overview}
+      releaseDate={details?.first_air_date}
+      runtime={details?.episode_run_time?.[0]}
+      voteCount={details?.vote_count}
+      backgroundSrc={imageService.getImageSrc(details?.backdrop_path || '', {
+        size: 'w1280',
+      })}
+      asideProps={{
+        children: (
+          <div className="mb-10">
+            <ul className="flex flex-row gap-2 mb-4 select-none ">
+              {joinReactNodes(
+                details?.seasons.map((season, id) => (
+                  <li
+                    key={season.id}
+                    className={`font-semibold hover:text-primary-400 cursor-pointer hover:scale-105 transition-all ${
+                      season.season_number === Number(seasonNumber) ? 'text-primary-400' : 'text-white'
+                    }`}
+                    onClick={() => navigate(`/shows/${showId}/season/${season.season_number}`)}>
+                    {season.name}
+                  </li>
+                )) || [],
+                <span className="text-white"> | </span>
+              )}
+            </ul>
+            <ul className="grid grid-cols-4 gap-4 select-none">
+              {seasonDetails?.episodes?.map((episode, id) => (
+                <EpisodeCard
+                  name={episode.name}
+                  thumbnailSrc={imageService.getImageSrc(episode.still_path || '')}
+                  number={episode.episode_number}
+                  onClick={() => navigate(`episode/${episode.episode_number}`)}
+                />
+              ))}
+            </ul>
           </div>
-        </div>
-        <div className="mb-10">
-          <ul className="flex flex-row gap-2 mb-4 select-none ">
-            {joinReactNodes(
-              details?.seasons.map((season, id) => (
-                <li
-                  key={season.id}
-                  className={`font-semibold hover:text-primary-400 cursor-pointer hover:scale-105 transition-all ${
-                    season.season_number === Number(seasonNumber) ? 'text-primary-400' : 'text-white'
-                  }`}
-                  onClick={() => navigate(`/shows/${showId}/season/${season.season_number}`)}>
-                  {season.name}
-                </li>
-              )) || [],
-              <span className="text-white"> | </span>
-            )}
-          </ul>
-          <ul className="grid grid-cols-4 gap-4 select-none">
-            {seasonDetails?.episodes?.map((episode, id) => (
-              <EpisodeCard
-                name={episode.name}
-                thumbnailSrc={imageService.getImageSrc(episode.still_path || '')}
-                number={episode.episode_number}
-                onClick={() => navigate(`episode/${episode.episode_number}`)}
-              />
-            ))}
-          </ul>
-        </div>
-      </div>
-    </BaseLayout>
+        ),
+      }}
+    />
   );
 };

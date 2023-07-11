@@ -5,7 +5,7 @@ import { EpisodesService } from '../../services/episodes/EpisodesService';
 import { EpisodeDetails } from '../../services/episodes/IEpisodesService';
 import { MoviesAPI } from '../../services/api/MoviesAPI';
 import { ImageService } from '../../services/image/ImageService';
-import { ShortRating } from '../../components/atoms/ShortRating';
+import { ShortRating } from '../../components/templates/ShowTitleTemplate/ShortRating';
 
 export const Episode = () => {
   const { showId, seasonNumber, episodeNumber } = useParams();

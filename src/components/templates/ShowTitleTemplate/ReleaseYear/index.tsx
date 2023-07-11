@@ -5,5 +5,5 @@ export type ReleaseDateProps = {
 };
 
 export const ReleaseYear: React.FC<ReleaseDateProps> = ({ releaseDate = '' }) => {
-  return <h3 className="text-lg text-white font-light">{new Date(releaseDate).getFullYear()}</h3>;
+  return <h3 className="text-lg text-white font-semibold">{new Date(releaseDate).getFullYear()}</h3>;
 };

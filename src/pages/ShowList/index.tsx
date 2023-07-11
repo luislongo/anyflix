@@ -13,6 +13,7 @@ import { TVService } from '../../services/tv/TVService';
 import { TVShow } from '../../services/tv/ITVService';
 import { HorizontalList } from '../../components/atoms/HorizontalScroll';
 import { Image } from '../../components/atoms/Image';
+import { TitleList } from '../../components/molecules/TitleList';
 
 export const ShowListPage = () => {
   const api = new MoviesAPI();
@@ -80,19 +81,12 @@ export const ShowListPage = () => {
         className="absolute top-0 left-0 right-0 bottom-0 overflow-y-scroll scrollbar-hide">
         <div className="mt-20 flex flex-col gap-2">
           {listMovies.map((list, id) => (
-            <HorizontalList key={id} title={list.category} className="my-2">
-              {list.shows.map((show) => (
-                <div key={show.id} onClick={() => navigate(`/shows/${show.id}/season/1`)}>
-                  <Image
-                    src={imageService.getImageSrc(show.poster_path, {
-                      size: 'original',
-                    })}
-                    alt={show.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ))}
-            </HorizontalList>
+            <TitleList
+              title={list.category}
+              key={id}
+              titles={list.shows}
+              onClick={(show) => navigate(`/shows/${show.id}/season/1`)}
+            />
           ))}
         </div>
       </InfiniteScroll>

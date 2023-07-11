@@ -5,5 +5,5 @@ export type MainProps = {
 };
 
 export const Main: React.FC<MainProps> = ({ children }) => {
-  return <main className="px-8 flex flex-col gap-5 justify-between pb-8">{children}</main>;
+  return <main className="px-8 flex flex-col gap-5 justify-start pb-8">{children}</main>;
 };

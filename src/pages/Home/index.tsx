@@ -90,25 +90,22 @@ export const Home = () => {
 
         <div className="mt-12 flex flex-col gap-2">
           {listMovies.map((list, id) => (
-            <>
-              <p className="text-white">{list.category}</p>
-              <HorizontalList key={id} title={list.category} className="my-2">
-                {list.movies.map((movie) => (
-                  <div
-                    className="shrink-0 w-40 scale-95 hover:scale-100 transition-all"
-                    key={movie.id}
-                    onClick={() => navigate(`/movies/${movie.id}`)}>
-                    <Image
-                      src={imageService.getImageSrc(movie.poster_path, {
-                        size: 'w300',
-                      })}
-                      alt={movie.title}
-                      className="w-42 h-auto object-cover"
-                    />
-                  </div>
-                ))}
-              </HorizontalList>
-            </>
+            <HorizontalList key={id} title={list.category} className="my-2">
+              {list.movies.map((movie) => (
+                <div
+                  className="shrink-0 w-40 scale-95 hover:scale-100 transition-all"
+                  key={movie.id}
+                  onClick={() => navigate(`/movies/${movie.id}`)}>
+                  <Image
+                    src={imageService.getImageSrc(movie.poster_path, {
+                      size: 'w300',
+                    })}
+                    alt={movie.title}
+                    className="w-42 h-auto object-cover"
+                  />
+                </div>
+              ))}
+            </HorizontalList>
           ))}
         </div>
       </InfiniteScroll>

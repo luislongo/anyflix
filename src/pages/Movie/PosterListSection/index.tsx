@@ -30,7 +30,7 @@ export const PosterListSection = ({
 
   return (
     <section className="select-none">
-      <HorizontalList title="Posters" className="flex flex-row flex-nowrap gap-2 overflow-x-auto">
+      <HorizontalList title="Posters" className="flex flex-row flex-nowrap gap-2 overflow-hidden">
         {images?.map((image, id) => {
           return (
             <Image

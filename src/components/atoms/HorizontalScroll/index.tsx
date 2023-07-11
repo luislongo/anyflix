@@ -21,7 +21,7 @@ export const HorizontalList: React.FC<HorizontalList> = ({ className, children, 
 
   return (
     <div className={`flex flex-col relative  ${className}`} {...props} ref={containerRef}>
-      <p className="text-white font-light text-lg">{title}</p>
+      <p className="text-white font-light text-lg px-8">{title}</p>
       <div className="flex flex-row">
         <ArrowController side="left" onClick={() => handleLeftArrowClick()} disabled={scroll === 0} />
         <Listing innerRef={ref}>{children}</Listing>
