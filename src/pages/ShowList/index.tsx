@@ -3,8 +3,6 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useNavigate } from 'react-router';
 import { HashLoader } from 'react-spinners';
 import lists from '../../assets/data/lists.json';
-import { VideoListing } from '../../components/molecules/VideoListing';
-import { VideoListingCard } from '../../components/molecules/VideoListing/components/Card';
 import BaseLayout from '../../components/organisms/BaseLayout';
 import { MoviesAPI } from '../../services/api/MoviesAPI';
 import { ImageService } from '../../services/image/ImageService';
@@ -13,6 +11,8 @@ import { MovieService } from '../../services/movie/MovieService';
 import { generateRandomArray } from '../../services/utils/generateRandomArray';
 import { TVService } from '../../services/tv/TVService';
 import { TVShow } from '../../services/tv/ITVService';
+import { HorizontalList } from '../../components/atoms/HorizontalScroll';
+import { Image } from '../../components/atoms/Image';
 
 export const ShowListPage = () => {
   const api = new MoviesAPI();
@@ -80,19 +80,19 @@ export const ShowListPage = () => {
         className="absolute top-0 left-0 right-0 bottom-0 overflow-y-scroll scrollbar-hide">
         <div className="mt-20 flex flex-col gap-2">
           {listMovies.map((list, id) => (
-            <VideoListing key={id} title={list.category} className="my-2">
+            <HorizontalList key={id} title={list.category} className="my-2">
               {list.shows.map((show) => (
-                <VideoListingCard key={show.id} onClick={() => navigate(`/shows/${show.id}/season/1`)}>
-                  <img
+                <div key={show.id} onClick={() => navigate(`/shows/${show.id}/season/1`)}>
+                  <Image
                     src={imageService.getImageSrc(show.poster_path, {
                       size: 'original',
                     })}
                     alt={show.name}
                     className="w-full h-full object-cover"
                   />
-                </VideoListingCard>
+                </div>
               ))}
-            </VideoListing>
+            </HorizontalList>
           ))}
         </div>
       </InfiniteScroll>

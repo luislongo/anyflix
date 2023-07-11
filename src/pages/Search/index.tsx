@@ -4,11 +4,12 @@ import { useNavigate, useParams } from 'react-router';
 import { MoviesAPI } from '../../services/api/MoviesAPI';
 import { MovieService } from '../../services/movie/MovieService';
 import { Movie } from '../../services/movie/IMovieService';
-import { VideoListing } from '../../components/molecules/VideoListing';
-import { VideoListingCard } from '../../components/molecules/VideoListing/components/Card';
 import { ImageService } from '../../services/image/ImageService';
 import { TVService } from '../../services/tv/TVService';
 import { TVShow } from '../../services/tv/ITVService';
+import { HorizontalList } from '../../components/atoms/HorizontalScroll';
+import { Image } from '../../components/atoms/Image';
+import { TitleList } from '../../components/molecules/TitleList';
 
 export const SearchPage = () => {
   const { query } = useParams();
@@ -35,28 +36,8 @@ export const SearchPage = () => {
 
   return (
     <BaseLayout defaultSearchValue={query} onSearchChange={handleSearchChange}>
-      <VideoListing title={'Movies'}>
-        {movies.map((movie) => (
-          <VideoListingCard
-            key={movie.id}
-            onClick={() => {
-              navigate(`/movies/${movie.id}`);
-            }}>
-            <img src={imageService.getImageSrc(movie.poster_path)} alt={movie.title} />
-          </VideoListingCard>
-        ))}
-      </VideoListing>
-      <VideoListing title={'TV Shows'}>
-        {shows.map((show) => (
-          <VideoListingCard
-            key={show.id}
-            onClick={() => {
-              navigate(`/shows/${show.id}/season/1`);
-            }}>
-            <img src={imageService.getImageSrc(show.poster_path)} alt={show.name} />
-          </VideoListingCard>
-        ))}
-      </VideoListing>
+      <TitleList title={'Movies'} titles={movies} onClick={(movie) => navigate(`/movies/${movie.id}`)} />
+      <TitleList title={'TV Shows'} titles={shows} onClick={(show) => navigate(`/shows/${show.id}`)} />
     </BaseLayout>
   );
 };

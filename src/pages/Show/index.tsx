@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { ShortRating } from '../../components/atoms/ShortRating';
-import { VideoListing } from '../../components/molecules/VideoListing';
-import { VideoListingCard } from '../../components/molecules/VideoListing/components/Card';
 import BaseLayout from '../../components/organisms/BaseLayout';
 import { MoviesAPI } from '../../services/api/MoviesAPI';
 import { ImageService } from '../../services/image/ImageService';
@@ -120,39 +118,6 @@ export const ShowPage = () => {
             ))}
           </ul>
         </div>
-        <VideoListing title={'Similar'}>
-          {similar?.map((movie) => (
-            <VideoListingCard
-              key={movie.id}
-              onClick={() => {
-                navigate(`/movies/${movie.id}`);
-              }}>
-              <img src={imageService.getImageSrc(movie.poster_path)} className="h-full w-auto" />
-            </VideoListingCard>
-          ))}
-        </VideoListing>
-        <VideoListing title="Cast">
-          {credits?.cast.map((member, id) => (
-            <div key={id} className="flex flex-row min-w-fit gap-2 items-center  ">
-              <img src={imageService.getImageSrc(member.profile_path || '')} className="w-20" />
-              <div>
-                <h3 className="font-bold">{member.name}</h3>
-                <p>{member.character}</p>
-              </div>
-            </div>
-          ))}
-        </VideoListing>
-        <VideoListing title="Crew">
-          {credits?.crew.map((member, id) => (
-            <div key={id} className="flex flex-row min-w-fit gap-2 items-center  ">
-              <img src={imageService.getImageSrc(member.profile_path || '')} className="w-20" />
-              <div>
-                <h3 className="font-bold">{member.name}</h3>
-                <p>{member.job}</p>
-              </div>
-            </div>
-          ))}
-        </VideoListing>
       </div>
     </BaseLayout>
   );

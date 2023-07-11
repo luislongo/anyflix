@@ -1,19 +1,18 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { useNavigate } from 'react-router';
+import { HashLoader } from 'react-spinners';
+import lists from '../../assets/data/lists.json';
 import { Carrousel } from '../../components/atoms/Carrousel';
+import { HorizontalList } from '../../components/atoms/HorizontalScroll';
+import { Image } from '../../components/atoms/Image';
 import { MovieCarrouselItem } from '../../components/atoms/MovieCarrouselItem';
-import { VideoListing } from '../../components/molecules/VideoListing';
-import { VideoListingCard } from '../../components/molecules/VideoListing/components/Card';
 import BaseLayout from '../../components/organisms/BaseLayout';
 import { MoviesAPI } from '../../services/api/MoviesAPI';
 import { ImageService } from '../../services/image/ImageService';
 import { Movie } from '../../services/movie/IMovieService';
 import { MovieService } from '../../services/movie/MovieService';
-import lists from '../../assets/data/lists.json';
-import { set } from 'react-hook-form';
 import { generateRandomArray } from '../../services/utils/generateRandomArray';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { HashLoader } from 'react-spinners';
 
 export const Home = () => {
   const api = new MoviesAPI();
@@ -91,19 +90,25 @@ export const Home = () => {
 
         <div className="mt-12 flex flex-col gap-2">
           {listMovies.map((list, id) => (
-            <VideoListing key={id} title={list.category} className="my-2">
-              {list.movies.map((movie) => (
-                <VideoListingCard key={movie.id} onClick={() => navigate(`/movies/${movie.id}`)}>
-                  <img
-                    src={imageService.getImageSrc(movie.poster_path, {
-                      size: 'original',
-                    })}
-                    alt={movie.title}
-                    className="w-full h-full object-cover"
-                  />
-                </VideoListingCard>
-              ))}
-            </VideoListing>
+            <>
+              <p className="text-white">{list.category}</p>
+              <HorizontalList key={id} title={list.category} className="my-2">
+                {list.movies.map((movie) => (
+                  <div
+                    className="shrink-0 w-40 scale-95 hover:scale-100 transition-all"
+                    key={movie.id}
+                    onClick={() => navigate(`/movies/${movie.id}`)}>
+                    <Image
+                      src={imageService.getImageSrc(movie.poster_path, {
+                        size: 'w300',
+                      })}
+                      alt={movie.title}
+                      className="w-42 h-auto object-cover"
+                    />
+                  </div>
+                ))}
+              </HorizontalList>
+            </>
           ))}
         </div>
       </InfiniteScroll>

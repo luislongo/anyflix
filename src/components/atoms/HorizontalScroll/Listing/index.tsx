@@ -7,7 +7,7 @@ export type ListingProps = {
 
 export const Listing: React.FC<ListingProps> = ({ children, innerRef }) => {
   return (
-    <div className="relative flex flex-row flex-nowrap gap-2 overflow-x-scroll scrollbar-hide px-6" ref={innerRef}>
+    <div className="relative flex flex-row flex-nowrap gap-4 overflow-x-scroll scrollbar-hide px-6" ref={innerRef}>
       {children}
     </div>
   );

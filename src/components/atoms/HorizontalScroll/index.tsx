@@ -3,9 +3,11 @@ import { useHorizontalScroll } from '../../../hooks/useHorizontalScroll';
 import { ArrowController } from '../ArrowController';
 import { Listing } from './Listing';
 
-export type HorizontalScrollProps = HTMLAttributes<HTMLDivElement>;
+export type HorizontalList = HTMLAttributes<HTMLDivElement> & {
+  title: string;
+};
 
-export const HorizontalScroll: React.FC<HorizontalScrollProps> = ({ className, title, children, ...props }) => {
+export const HorizontalList: React.FC<HorizontalList> = ({ className, children, title, ...props }) => {
   const { ref, scroll, scrollTo } = useHorizontalScroll();
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -18,10 +20,13 @@ export const HorizontalScroll: React.FC<HorizontalScrollProps> = ({ className, t
   };
 
   return (
-    <div className={`flex flex-row relative ${className}`} {...props} ref={containerRef}>
-      <ArrowController side="left" onClick={() => handleLeftArrowClick()} disabled={scroll === 0} />
-      <Listing innerRef={ref}>{children}</Listing>
-      <ArrowController side="right" onClick={() => handleRightArrowClick()} />
+    <div className={`flex flex-col relative  ${className}`} {...props} ref={containerRef}>
+      <p className="text-white font-light text-lg">{title}</p>
+      <div className="flex flex-row">
+        <ArrowController side="left" onClick={() => handleLeftArrowClick()} disabled={scroll === 0} />
+        <Listing innerRef={ref}>{children}</Listing>
+        <ArrowController side="right" onClick={() => handleRightArrowClick()} />
+      </div>
     </div>
   );
 };

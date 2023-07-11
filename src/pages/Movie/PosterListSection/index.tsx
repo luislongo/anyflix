@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ArrowController } from '../../../components/atoms/ArrowController';
-import { HorizontalScroll } from '../../../components/atoms/HorizontalScroll';
+import { HorizontalList } from '../../../components/atoms/HorizontalScroll';
 import { Overlay } from '../../../components/atoms/Overlay';
 import { Image } from '../../../components/atoms/Image';
 
@@ -30,18 +30,17 @@ export const PosterListSection = ({
 
   return (
     <section className="select-none">
-      <h2 className="text-white text-2xl mb-2">Posters</h2>
-      <HorizontalScroll title="Posters" className="flex flex-row flex-nowrap gap-2 h-40 overflow-x-auto">
+      <HorizontalList title="Posters" className="flex flex-row flex-nowrap gap-2 overflow-x-auto">
         {images?.map((image, id) => {
           return (
             <Image
               src={image.smallUrl}
-              className="h-auto hover:scale-100 scale-95 cursor-pointer "
+              className="h-full w-auto hover:scale-100 scale-95 cursor-pointer "
               onClick={() => setSelected(id)}
             />
           );
         })}
-      </HorizontalScroll>
+      </HorizontalList>
       {selected !== undefined &&
         createPortal(
           <div className="fixed top-0 left-0 w-screen h-screen  flex justify-center items-center">

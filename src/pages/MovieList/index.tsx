@@ -3,16 +3,15 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useNavigate } from 'react-router';
 import { HashLoader } from 'react-spinners';
 import lists from '../../assets/data/lists.json';
-import { Carrousel } from '../../components/atoms/Carrousel';
-import { MovieCarrouselItem } from '../../components/atoms/MovieCarrouselItem';
-import { VideoListing } from '../../components/molecules/VideoListing';
-import { VideoListingCard } from '../../components/molecules/VideoListing/components/Card';
 import BaseLayout from '../../components/organisms/BaseLayout';
 import { MoviesAPI } from '../../services/api/MoviesAPI';
 import { ImageService } from '../../services/image/ImageService';
 import { Movie } from '../../services/movie/IMovieService';
 import { MovieService } from '../../services/movie/MovieService';
 import { generateRandomArray } from '../../services/utils/generateRandomArray';
+import { HorizontalList } from '../../components/atoms/HorizontalScroll';
+import { Image } from '../../components/atoms/Image';
+import { TitleList } from '../../components/molecules/TitleList';
 
 export const MovieListPage = () => {
   const api = new MoviesAPI();
@@ -71,19 +70,12 @@ export const MovieListPage = () => {
         className="absolute top-0 left-0 right-0 bottom-0 overflow-y-scroll scrollbar-hide">
         <div className="mt-20 flex flex-col gap-2">
           {listMovies.map((list, id) => (
-            <VideoListing key={id} title={list.category} className="my-2">
-              {list.movies.map((movie) => (
-                <VideoListingCard key={movie.id} onClick={() => navigate(`/movies/${movie.id}`)}>
-                  <img
-                    src={imageService.getImageSrc(movie.poster_path, {
-                      size: 'original',
-                    })}
-                    alt={movie.title}
-                    className="w-full h-full object-cover"
-                  />
-                </VideoListingCard>
-              ))}
-            </VideoListing>
+            <TitleList
+              key={id}
+              title={list.category}
+              titles={list.movies}
+              onClick={(movie) => navigate(`/movies/${movie.id}`)}
+            />
           ))}
         </div>
       </InfiniteScroll>
