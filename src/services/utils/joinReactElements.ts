@@ -1,5 +1,19 @@
-export const joinReactElement = (elements: JSX.Element[], separator: JSX.Element) => {
-    return elements.reduce((acc, el) => {
-        return acc.length === 0 ? [el] : [...acc, separator, el];
-    }, [] as JSX.Element[]);
+import { ReactNode } from "react";
+
+export const joinReactNodes = (
+    nodes: ReactNode[] | ReactNode,
+    separator: ReactNode
+): ReactNode[] => {
+    if (!Array.isArray(nodes)) {
+        return [nodes];
+    }
+    
+    const result: ReactNode[] = [];
+    nodes.forEach((node, index) => {
+        result.push(node);
+        if (index < nodes.length - 1) {
+            result.push(separator);
+        }
+    });
+    return result;
 }

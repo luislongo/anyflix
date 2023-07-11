@@ -5,7 +5,7 @@ import { EpisodesService } from '../../services/episodes/EpisodesService';
 import { EpisodeDetails } from '../../services/episodes/IEpisodesService';
 import { MoviesAPI } from '../../services/api/MoviesAPI';
 import { ImageService } from '../../services/image/ImageService';
-import { Rating } from '../../components/atoms/Rating';
+import { ShortRating } from '../../components/atoms/ShortRating';
 
 export const Episode = () => {
   const { showId, seasonNumber, episodeNumber } = useParams();
@@ -38,7 +38,7 @@ export const Episode = () => {
               {new Date(episodeDetails?.air_date || '').toLocaleDateString()}
             </h3>
             <h3 className="text-lg text-white font-light">{episodeDetails?.runtime}min</h3>
-            <Rating className="w-30 h-10" rating={(episodeDetails?.vote_average || 0) / 2 || 0} />
+            <ShortRating className="w-30 h-10" rating={(episodeDetails?.vote_average || 0) / 2 || 0} />
           </div>
           <h2 className="text-lg text-white font-light">{episodeDetails?.overview}</h2>
         </div>

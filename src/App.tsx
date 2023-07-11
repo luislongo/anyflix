@@ -13,24 +13,16 @@ import { ShowListPage } from './pages/ShowList';
 function App() {
   return (
     <BrowserRouter>
-      <SecureComponent
-        unAuthComponent={
-          <Routes>
-            <Route path="*" element={<Login />} />
-            <Route path="/sign-up" element={<SignUp />} />
-          </Routes>
-        }>
-        <Routes>
-          <Route path="/home" element={<Home />} />
-          <Route path="/movies" element={<MovieListPage />} />
-          <Route path="/movies/:id" element={<MoviePage />} />
-          <Route path="/shows/" element={<ShowListPage />} />
-          <Route path="/shows/:showId/season/:seasonNumber" element={<ShowPage />} />
-          <Route path="/shows/:showId/season/:seasonNumber/episode/:episodeNumber" element={<Episode />} />
-          <Route path="/search/:query" element={<SearchPage />} />
-          <Route path="*" element={<Home />} />
-        </Routes>
-      </SecureComponent>
+      <Routes>
+        <Route path="/*" element={<Home />} />
+        <Route path="/movies" element={<MovieListPage />} />
+        <Route path="/movies/:id" element={<MoviePage />} />
+        <Route path="/shows/" element={<ShowListPage />} />
+        <Route path="/shows/:showId/season/:seasonNumber" element={<ShowPage />} />
+        <Route path="/shows/:showId/season/:seasonNumber/episode/:episodeNumber" element={<Episode />} />
+        <Route path="/search/:query" element={<SearchPage />} />
+        <Route path="*" element={<Home />} />
+      </Routes>
     </BrowserRouter>
   );
 }
