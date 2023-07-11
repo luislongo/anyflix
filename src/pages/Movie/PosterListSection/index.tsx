@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { ArrowController } from '../../../components/atoms/ArrowController';
 import { HorizontalScroll } from '../../../components/atoms/HorizontalScroll';
 import { Overlay } from '../../../components/atoms/Overlay';
+import { Image } from '../../../components/atoms/Image';
 
 export const PosterListSection = ({
   images,
@@ -33,7 +34,7 @@ export const PosterListSection = ({
       <HorizontalScroll title="Posters" className="flex flex-row flex-nowrap gap-2 h-40 overflow-x-auto">
         {images?.map((image, id) => {
           return (
-            <img
+            <Image
               src={image.smallUrl}
               className="h-auto hover:scale-100 scale-95 cursor-pointer "
               onClick={() => setSelected(id)}
@@ -48,7 +49,7 @@ export const PosterListSection = ({
             <ArrowController side="left" onClick={() => handleArrowClick('left')} />
             <ArrowController side="right" onClick={() => handleArrowClick('right')} />
             <div className=" absolute flex flex-col items-center gap-4 h-[80%] max-h-[80%]">
-              <img src={images[selected].largeUrl} className="h-full select-none" />
+              <Image src={images[selected].largeUrl} className="h-full select-none bg-black" />
               <p className="text-white font-sans font-bold text-lg">
                 {selected} / {images.length}
               </p>
